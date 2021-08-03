@@ -1,7 +1,12 @@
+import { NextFunction } from 'express';
+import { Response } from 'express';
+import { Request } from 'express';
 import { UserController } from './controller/UserController';
 import { NoteController } from "./controller/NoteController";
 
+
 export const Routes = [
+
   {
     method: "get",
     route: "/users/:id",

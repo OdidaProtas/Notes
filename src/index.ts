@@ -25,6 +25,10 @@ createConnection().then(async connection => {
         });
     });
 
+    app.get("/", (request: Request, response: Response)=>{
+        response.json("Notes works");
+    })
+
     app.listen(process.env.PORT);
     
     console.log(`Express server started on port ${process.env.PORT}`)
