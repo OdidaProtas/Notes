@@ -7,7 +7,7 @@ Steps to run this project:
 3. Run `npm start` command
 
 
-# Enpoints
+# Endpoints
 
 - `POST: /users/`  Creates a new user with a unique email address. 
 ```
