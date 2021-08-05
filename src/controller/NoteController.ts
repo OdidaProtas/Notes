@@ -17,15 +17,13 @@ export class NoteController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        console.log(request.body);
-        
         const [data, ] = await handleException(this.noteRepository.save(request.body));
         return data ? data : response.sendStatus(400);
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
-        const [data, ] = await handleException(this.noteRepository.remove(request.params.id));
-        return data ? data : response.sendStatus(403);
+        const [data, ] = await handleException(this.noteRepository.findOne(request.params.id));
+        return data ?  this.noteRepository.remove(data) : response.sendStatus(403);
     }
 
 }
