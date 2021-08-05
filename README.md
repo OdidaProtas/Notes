@@ -11,19 +11,21 @@ Steps to run this project:
 
 - `POST: /users/`  Creates a new user with a unique email address. 
 ```
-email: required 
+{email: ""}
 ```
 - `GET: /users/:id`  Gets the user for specified ID
 - `DELETE: /users/:id` Deletes instance of specified user ID
 
 - `POST: /notes/` Creates a note. 
 ```
-title : nullable
-subtitle : nullable
-content : required
-date : timestamp | required
-isImportant : false | boolean
-user : User ID | required | number
+{
+    title : "", // nullable
+    subtitle : "", // nullable
+    content : "", 
+    date : "", // timestamp
+    isImportant : false, 
+    user : "" // ID
+}
 ```
 
 - `GET: /users/:id/notes`  Gets all notes  for specified user

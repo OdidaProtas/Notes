@@ -26,7 +26,7 @@ createConnection().then(async connection => {
     });
 
     app.get("/", (request: Request, response: Response)=>{
-        response.json("Notes works");
+        response.json("Visit https://github.com/OdidaProtas/Notes");
     })
 
     app.listen(process.env.PORT);
