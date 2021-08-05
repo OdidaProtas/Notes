@@ -28,7 +28,8 @@ Steps to run this project:
 }
 ```
 
-- `GET: /users/:id/notes`  Gets all notes  for specified user
+- `GET: /users/:id/notes`  Gets all notes  for specified user ID
+- `GET: /users/:email/notes` Gets the note for specified user email
 - `DELETE: /notes/:id` Deletes instance of specified note ID 
-- `GET: /notes/:id` 
-Gets the note for specified ID
+- `GET: /notes/:id` Gets the note for specified ID
+

@@ -26,6 +26,12 @@ export class Note {
     date: string;
 
     @Column({
+        type:"timestamp",
+        nullable: true
+    })
+    updated: string;
+
+    @Column({
         default: false
     })
     isImportant: boolean;
