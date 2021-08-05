@@ -22,7 +22,6 @@ Steps to run this project:
     title : "", // nullable
     subtitle : "", // nullable
     content : "", 
-    date : "", // timestamp
     isImportant : false, 
     user : "" // ID
 }

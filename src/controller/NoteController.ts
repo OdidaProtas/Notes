@@ -17,6 +17,8 @@ export class NoteController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
+        console.log(request.body);
+        
         const [data, ] = await handleException(this.noteRepository.save(request.body));
         return data ? data : response.sendStatus(400);
     }

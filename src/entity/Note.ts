@@ -21,12 +21,11 @@ export class Note {
     content: string;
 
     @Column({
-        type: "timestamp",
+        default: Date.now()
     })
     date: string;
 
     @Column({
-        type:"timestamp",
         nullable: true
     })
     updated: string;
