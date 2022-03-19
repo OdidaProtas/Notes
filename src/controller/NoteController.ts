@@ -2,6 +2,7 @@ import { Note } from "./../entity/Note";
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import handleException from "./handleException";
+import createRoute from "./createRoute";
 
 export class NoteController {
   private noteRepository = getRepository(Note);
@@ -58,3 +59,9 @@ export class NoteController {
     else response.sendStatus(404);
   }
 }
+
+export const NoteRoutes = [
+  createRoute("get", "/note/:id", UserController, "one"),
+  createRoute("post", "/notes", UserController, "save"),
+  createRoute("delete", "/notes/:id", UserController, "remove"),
+];
