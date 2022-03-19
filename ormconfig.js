@@ -16,4 +16,10 @@ module.exports = {
     migrationsDir: `${app}/migration`,
     subscribersDir: `${app}/subscriber`,
   },
+  ssl: false, //for ssl db ie heroku
+  // extra: { // for ssl db
+  //   ssl: {
+  //     rejectUnauthorized: false,
+  //   },
+  // },
 };
