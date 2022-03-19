@@ -18,6 +18,7 @@ createConnection()
 
     const middleware = new MiddleWare();
     app.use(middleware.authMiddleWare);
+    app.use(middleware.gmailMiddleware);
 
     // configure socket.io
 

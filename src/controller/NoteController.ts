@@ -29,6 +29,23 @@ export class NoteController {
     // use socket.io example
     const io = req["io"];
     io.emit("new_note", data);
+
+    // use gmail example
+
+    const gmail = req["gmail"];
+    gmail
+      .sendMail({
+        from: `${process.env.MY_EMAIL}`,
+        to: "",
+        subject: "New note created",
+        text: "Check new note", // plain text body
+        html: `<b>Note details</b>`, // html body
+      })
+      .then((info) => {
+        console.log({ info });
+      })
+      .catch(console.error);
+
     if (data) return data;
     else response.sendStatus(403);
   }
