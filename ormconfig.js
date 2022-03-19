@@ -1,15 +1,13 @@
-const environment = process.env.app_environment;
-const ext = environment === "debug" ? "ts" : "js";
-const app = environment === "debug" ? "src" : "build";
+const environment = process.env.ENVIRONMENT;
+const ext = environment === "production" ? "js" : "ts";
+const app = environment === "production" ? "build" : "src";
 
 module.exports = {
   type: "postgres",
-  host: process.env.database_host,
   port: 5432,
-  username: process.env.database_username,
-  password: process.env.database_password,
-  database: process.env.database_username,
+  url: process.env.DATABASE_URL,
   logging: false,
+  synchronize: true,
   entities: [`${app}/entity/**/*.${ext}`],
   migrations: [`${app}/migration/**/*.${ext}`],
   subscribers: [`${app}/subscriber/**/*.${ext}`],
@@ -18,4 +16,10 @@ module.exports = {
     migrationsDir: `${app}/migration`,
     subscribersDir: `${app}/subscriber`,
   },
+  ssl: false, //for ssl db ie heroku
+  // extra: { // for ssl db
+  //   ssl: {
+  //     rejectUnauthorized: false,
+  //   },
+  // },
 };

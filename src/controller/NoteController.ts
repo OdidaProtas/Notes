@@ -1,29 +1,67 @@
-import { Note } from './../entity/Note';
-import {getRepository} from "typeorm";
-import {NextFunction, Request, Response} from "express";
-import handleException from './handleException';
+import { Note } from "./../entity/Note";
+import { getRepository } from "typeorm";
+import { NextFunction, Request, Response } from "express";
+import handleException from "./handleException";
+import createRoute from "./createRoute";
 
 export class NoteController {
+  private noteRepository = getRepository(Note);
 
-    private noteRepository = getRepository(Note);
+  async all(request: Request, response: Response, next: NextFunction) {
+    const [data, err] = await handleException(
+      this.noteRepository.find(req.params.id)
+    );
+    if (data) return data;
+    else response.sendStatus(404);
+  }
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.noteRepository.find({where:{user: parseInt(request.params.id)}});
-    }
+  async one(request: Request, response: Response, next: NextFunction) {
+    const [data, err] = await handleException(
+      this.noteRepository.findOne(request.params.id)
+    );
+    if (data) return data;
+    else response.sendStatus(404);
+  }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        const [data, ] = await handleException(this.noteRepository.findOne(request.params.id));
-        return data ? data : response.sendStatus(404);
-    }
+  async save(request: Request, response: Response, next: NextFunction) {
+    const [data, err] = await handleException(
+      this.noteRepository.save(request.body)
+    );
+    // use socket.io example
+    const io = req["io"];
+    io.emit("new_note", data);
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        const [data, ] = await handleException(this.noteRepository.save(request.body));
-        return data ? data : response.sendStatus(400);
-    }
+    // use gmail example
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        const [data, ] = await handleException(this.noteRepository.findOne(request.params.id));
-        return data ?  this.noteRepository.remove(data) : response.sendStatus(403);
-    }
+    const gmail = req["gmail"];
+    gmail
+      .sendMail({
+        from: `${process.env.MY_EMAIL}`,
+        to: "",
+        subject: "New note created",
+        text: "Check new note", // plain text body
+        html: `<b>Note details</b>`, // html body
+      })
+      .then((info) => {
+        console.log({ info });
+      })
+      .catch(console.error);
 
+    if (data) return data;
+    else response.sendStatus(403);
+  }
+
+  async remove(request: Request, response: Response, next: NextFunction) {
+    const [data, err] = await handleException(
+      this.noteRepository.remove(request.params.id)
+    );
+    if (data) return data;
+    else response.sendStatus(404);
+  }
 }
+
+export const NoteRoutes = [
+  createRoute("get", "/note/:id", UserController, "one"),
+  createRoute("post", "/notes", UserController, "save"),
+  createRoute("delete", "/notes/:id", UserController, "remove"),
+];
