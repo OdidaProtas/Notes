@@ -19,6 +19,23 @@ createConnection()
     const middleware = new MiddleWare();
     app.use(middleware.authMiddleWare);
 
+    // configure socket.io
+
+    const http = require("http");
+    const server = http.createServer(app);
+
+    const io = require("socket.io")(server, {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+      },
+    });
+
+    // register socket middleware
+    app.use((req, res, next) =>
+      middleWare.socketMiddleWare(req, res, next, io)
+    );
+
     // register express routes from defined application routes
     Routes.forEach((route) => {
       (app as any)[route.method](
@@ -46,7 +63,7 @@ createConnection()
       response.json("Visit https://github.com/OdidaProtas/Notes");
     });
 
-    app.listen(process.env.PORT);
+    server.listen(process.env.PORT);
 
     console.log(`Express server started on port ${process.env.PORT}`);
   })

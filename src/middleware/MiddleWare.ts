@@ -18,4 +18,12 @@ export class MiddleWare {
 
     return next();
   }
+
+  async socketMiddleWare(req:Request, res:Response, next:NextFunction, io:any){
+    req["io"] = io;
+    io.on("connection", (socket:any)=>{
+      console.log("A client connected")
+    })
+    next()
+}
 }
